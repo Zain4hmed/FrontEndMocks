@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Input Fields</title>
+</head>
+<body>
+
+<!-- Settings Form -->
+<form id="settingsForm">
+    <label for="fieldName">Field Name:</label><br>
+    <input type="text" id="fieldName" name="fieldName"><br>
+
+    <label for="fieldType">Field Type:</label><br>
+    <select id="fieldType" name="fieldType">
+        <option value="text">Text</option>
+        <option value="date">Date</option>
+        <option value="options">Options</option>
+    </select><br>
+
+    <button type="button" onclick="saveSettings()">Save</button>
+</form>
+
+<hr>
+
+<!-- Data Entry Form -->
+<form id="dataEntryForm">
+    <div id="dynamicFields">
+        <!-- Dynamic fields will be added here -->
+    </div>
+    <button type="button" onclick="saveData()">Save Data</button>
+</form>
+
+<script>
+function saveSettings() {
+    var fieldName = document.getElementById("fieldName").value;
+    var fieldType = document.getElementById("fieldType").value;
+
+    // Clear previous dynamic fields
+    var dynamicFields = document.getElementById("dynamicFields");
+    dynamicFields.innerHTML = "";
+
+    // Create new input field based on field type
+    var inputField = document.createElement("input");
+    inputField.setAttribute("type", fieldType);
+    inputField.setAttribute("name", fieldName);
+    inputField.setAttribute("placeholder", "Enter " + fieldType);
+
+    // Create label for input field
+    var label = document.createElement("label");
+    label.setAttribute("for", fieldName);
+    label.textContent = fieldName + ":";
+
+    // Append label and input field to the dynamicFields div
+    dynamicFields.appendChild(label);
+    dynamicFields.appendChild(document.createElement("br"));
+    dynamicFields.appendChild(inputField);
+    dynamicFields.appendChild(document.createElement("br"));
+}
+
+function saveData() {
+    // Retrieve data from the data entry form and process it accordingly
+    var formData = new FormData(document.getElementById("dataEntryForm"));
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+}
+</script>
+
+</body>
+</html>
